@@ -8,3 +8,6 @@
 - Select presets for starter images
 - Clear Button
 - Speed
+
+
+https://conwaylife.com/
