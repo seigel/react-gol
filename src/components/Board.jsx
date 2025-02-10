@@ -5,7 +5,6 @@ import {
   moveToNextState,
 } from "../models/BoardModel.js";
 import Atom from "./Atom";
-import GenerationContext from "../context/GenerationContext.js";
 import PropTypes from "prop-types";
 
 const Board = ({ x, y }) => {
@@ -13,17 +12,15 @@ const Board = ({ x, y }) => {
   const [generation, setGeneration] = useState(0);
 
   useEffect(() => {
-    //Implementing the setInterval method
     if (isRunning) {
       const interval = setInterval(() => {
         console.log("generation board", generation, humanize());
         moveToNextState();
         setGeneration(generation + 1);
       }, 500);
-
-      //Clearing the interval
       return () => clearInterval(interval);
     }
+
     setGeneration(0);
     return () => {};
   }, [generation, isRunning]);
@@ -34,7 +31,14 @@ const Board = ({ x, y }) => {
 
   const theBoard = board.map((a, i) => {
     const row = a.map((b) => {
-      return <Atom state={b.state} updateState={b.updateState} key={b.uid()} />;
+      return (
+        <Atom
+          state={b.state}
+          updateState={b.updateState}
+          key={b.uid()}
+          generation={generation}
+        />
+      );
     });
 
     return (
@@ -51,7 +55,7 @@ const Board = ({ x, y }) => {
     );
   });
   return (
-    <GenerationContext.Provider value={generation}>
+    <>
       <button onClick={() => setIsRunning(!isRunning)}>
         The Board {isRunning ? "is" : "is not"} Running
       </button>
@@ -68,7 +72,7 @@ const Board = ({ x, y }) => {
       >
         {theBoard}
       </div>
-    </GenerationContext.Provider>
+    </>
   );
 };
 export default Board;

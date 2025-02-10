@@ -1,13 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import GenerationContext from "../context/GenerationContext.js";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const Atom = ({ state, updateState }) => {
+const Atom = ({ state, updateState, generation }) => {
   const [value, setValue] = useState(state() || false);
-  const generation = useContext(GenerationContext);
 
   useEffect(() => {
-    console.log("x");
     setValue(state());
   }, [generation, state]);
 
@@ -36,4 +33,5 @@ export default Atom;
 Atom.propTypes = {
   state: PropTypes.bool,
   updateState: PropTypes.func,
+  generation: PropTypes.number,
 };
