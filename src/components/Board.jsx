@@ -15,7 +15,7 @@ const Board = ({ x, y, pattern }) => {
       const interval = setInterval(() => {
         moveToNextState();
         setGeneration(generation + 1);
-      }, 500);
+      }, 150);
       return () => clearInterval(interval);
     }
 

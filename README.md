@@ -1,8 +1,10 @@
-# React + Vite
+# GOL Side-project with Duncan
+- basic functionality to render and model the GOL
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Ideas
+- User configurable size of grid
+  - URL params can override
+  - Slider in UI to configure grid and update the URL
+- Select presets for starter images
+- Clear Button
+- Speed

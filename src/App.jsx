@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <div className="card">
-        <Board x={40} y={40} pattern={flyerGenerator}/>
+        <Board x={38} y={20} pattern={flyerGenerator}/>
       </div>
     </>
   );
