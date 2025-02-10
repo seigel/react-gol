@@ -7,14 +7,13 @@ import {
 import Atom from "./Atom";
 import PropTypes from "prop-types";
 
-const Board = ({ x, y }) => {
+const Board = ({ x, y, pattern }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [generation, setGeneration] = useState(0);
 
   useEffect(() => {
     if (isRunning) {
       const interval = setInterval(() => {
-        console.log("generation board", generation, humanize());
         moveToNextState();
         setGeneration(generation + 1);
       }, 500);
@@ -26,7 +25,7 @@ const Board = ({ x, y }) => {
   }, [generation, isRunning]);
 
   const board = useMemo(() => {
-    return createBoard(x, y);
+    return createBoard(x, y, pattern);
   }, [x, y]);
 
   const theBoard = board.map((a, i) => {
@@ -80,4 +79,5 @@ export default Board;
 Board.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
+  pattern: PropTypes.array,
 };
