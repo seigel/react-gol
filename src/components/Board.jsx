@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   createBoard,
-  humanize,
   moveToNextState,
 } from "../models/BoardModel.js";
 import Atom from "./Atom";
