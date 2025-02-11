@@ -1,4 +1,5 @@
 import Square from "./Square.js";
+import board from "../components/Board.jsx";
 
 let _board = null;
 
@@ -16,6 +17,14 @@ const createBoard = (x, y, pattern) => {
   }
   return _board;
 };
+
+const clearBoard = () => {
+  _board.forEach((row) => {
+    row.forEach((square) => {
+      square.updateState(false);
+    })
+  })
+}
 
 const humanize = () => {
   return _board.map((row) => {
@@ -38,4 +47,4 @@ const moveToNextState = () => {
   });
 };
 
-export { createBoard, humanize, moveToNextState };
+export { createBoard, humanize, moveToNextState, clearBoard };
