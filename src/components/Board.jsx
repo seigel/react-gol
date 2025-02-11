@@ -9,23 +9,27 @@ import PropTypes from "prop-types";
 
 const Board = ({x, y, pattern}) => {
     const [isRunning, setIsRunning] = useState(false);
+    const [count, setCount] = useState(0);
     const [generation, setGeneration] = useState(0);
     const [buttonLabel, setButtonLabel] = useState("Clear Board");
+    const [timer, setTimer] = useState(150);
 
     useEffect(() => {
-        console.log('running')
-        if (isRunning) {
-            const interval = setInterval(() => {
-                moveToNextState();
-                setGeneration(generation + 1);
-            }, 150);
-            return () => clearInterval(interval);
-        }
+        console.log('redoing');
+        const interval = setInterval(() => {
+            console.log('intervalling');
+            setCount(prev => prev + 1);
+        }, timer);
+        return () => clearInterval(interval);
+    },[]);
 
-        setGeneration(0);
-        return () => {
-        };
-    }, [generation, isRunning]);
+    useEffect(() => {
+        console.log('count', count);
+        if (isRunning) {
+            moveToNextState();
+            setGeneration(prev => prev + 1);
+        }
+    }, [isRunning, count]);
 
     const board = useMemo(() => {
         return createBoard(x, y, pattern);
@@ -35,13 +39,13 @@ const Board = ({x, y, pattern}) => {
         setIsRunning(!isRunning)
     };
 
-    const clearBoardAction = ()=>{
+    const clearBoardAction = useCallback(() => {
         setButtonLabel("...");
         setIsRunning(false);
         setGeneration(0);
         clearBoard();
         setButtonLabel("Clear Board");
-    }
+    },[]);
 
     const theBoard = board.map((a, i) => {
         const row = a.map((b) => {
@@ -68,6 +72,7 @@ const Board = ({x, y, pattern}) => {
             </div>
         );
     });
+    console.log('render')
     return (
         <>
             <button onClick={toggleRunning}>
