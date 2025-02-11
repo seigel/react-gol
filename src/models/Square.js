@@ -1,6 +1,5 @@
 class Square {
   constructor(xLoc, yLoc, initState, board) {
-    console.log("params", xLoc, yLoc, initState, board);
     this.xLoc = xLoc;
     this.yLoc = yLoc;
     this.squareState = initState || false;

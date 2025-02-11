@@ -18,12 +18,18 @@ const createBoard = (x, y, pattern) => {
   return _board;
 };
 
-const clearBoard = () => {
-  _board.forEach((row) => {
-    row.forEach((square) => {
-      square.updateState(false);
-    })
-  })
+const clearBoard = (pattern) => {
+  const y = _board.length;
+  const x = _board[0].length;
+  for (let yLoc = 0; yLoc < y; yLoc++) {
+    for (let xLoc = 0; xLoc < x; xLoc++) {
+      let initValue = false;
+      if (pattern && yLoc < pattern.length && xLoc < pattern[0].length) {
+        initValue = pattern[yLoc][xLoc];
+      }
+      _board[yLoc][xLoc].updateState(initValue);
+    }
+  }
 }
 
 const humanize = () => {

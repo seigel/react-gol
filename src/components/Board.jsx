@@ -5,7 +5,9 @@ import {
     moveToNextState,
 } from "../models/BoardModel.js";
 import Atom from "./Atom";
+import Patterns from "../patterns";
 import PropTypes from "prop-types";
+
 
 const Board = ({x, y, pattern}) => {
     const [isRunning, setIsRunning] = useState(false);
@@ -13,18 +15,19 @@ const Board = ({x, y, pattern}) => {
     const [generation, setGeneration] = useState(0);
     const [buttonLabel, setButtonLabel] = useState("Clear Board");
     const [timer, setTimer] = useState(150);
+    const [startPattern, setStartPattern] = useState('glider');
 
     useEffect(() => {
         console.log('redoing');
         const interval = setInterval(() => {
-            console.log('intervalling');
+            // console.log('intervalling');
             setCount(prev => prev + 1);
         }, timer);
         return () => clearInterval(interval);
     },[]);
 
     useEffect(() => {
-        console.log('count', count);
+        // console.log('count', count);
         if (isRunning) {
             moveToNextState();
             setGeneration(prev => prev + 1);
@@ -32,8 +35,8 @@ const Board = ({x, y, pattern}) => {
     }, [isRunning, count]);
 
     const board = useMemo(() => {
-        return createBoard(x, y, pattern);
-    }, [x, y, pattern]);
+        return createBoard(x, y, Patterns[startPattern] || [[0]]);
+    }, [x, y, startPattern]);
 
     const toggleRunning = () => {
         setIsRunning(!isRunning)
@@ -43,9 +46,9 @@ const Board = ({x, y, pattern}) => {
         setButtonLabel("...");
         setIsRunning(false);
         setGeneration(0);
-        clearBoard();
+        clearBoard(Patterns[startPattern] || [[0]]);
         setButtonLabel("Clear Board");
-    },[]);
+    },[startPattern]);
 
     const theBoard = board.map((a, i) => {
         const row = a.map((b) => {
@@ -72,29 +75,33 @@ const Board = ({x, y, pattern}) => {
             </div>
         );
     });
-    console.log('render')
     return (
-        <>
-            <button onClick={toggleRunning}>
-                The Board {isRunning ? "is" : "is not"} Running
-            </button>
-            <button onClick={clearBoardAction}>
-                {buttonLabel}
-            </button>
-            <div>{generation}</div>
-            <div style={{marginBottom: 10}}>
-                The dimensions of the board are x: {x || 0} and y: {y || 0}
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                {theBoard}
-            </div>
-        </>
+      <>
+        <div>
+          <button onClick={toggleRunning}>
+            The Board {isRunning ? "is" : "is not"} Running
+          </button>
+          <button onClick={clearBoardAction}>{buttonLabel}</button>
+          <label htmlFor="cars">Choose a start pattern:</label>
+          <select name="patterns" onChange={(event)=>{
+              console.log('selected', event.target.value);
+              setStartPattern(event.target.value);
+          }} value={startPattern}>
+            <option value="">None</option>
+            <option value="glider">Glider</option>
+          </select>
+        </div>
+        <div>{generation}</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {theBoard}
+        </div>
+      </>
     );
 };
 export default Board;

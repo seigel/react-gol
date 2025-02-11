@@ -31,7 +31,7 @@ const Atom = ({ state, updateState, generation }) => {
 export default Atom;
 
 Atom.propTypes = {
-  state: PropTypes.bool,
+  state: PropTypes.func,
   updateState: PropTypes.func,
   generation: PropTypes.number,
 };
